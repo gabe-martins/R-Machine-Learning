@@ -1,0 +1,51 @@
+
+Naive Bayes
+
+```{r}
+install.packages("e1071")
+library(e1071)
+```
+
+```{r}
+credit = read.csv("Credit.csv")
+head(credit)
+dim(credit)
+```
+
+```{r}
+credit$class = as.factor(credit$class)
+```
+
+```{r}
+exemple = sample(2, 1000, replace = T, prob = c(0.7, 0.3))
+exemple
+
+trainCredit = credit[exemple==1,]
+testCredit = credit[exemple==2,]
+```
+
+```{r}
+dim(trainCredit)
+dim(testCredit)
+```
+
+```{r}
+model <- naiveBayes(class ~., trainCredit)
+model
+```
+
+```{r}
+predicts <- predict(model,testCredit)
+predicts
+```
+```{r}
+confusion = table(testCredit$class, predicts)
+confusion
+```
+
+```{r}
+taxaacerto = (confusion[1] + confusion[4]) / sum(confusion)
+taxaerro = (confusion[2] + confusion[3]) / sum(confusion)
+taxaacerto
+taxaerro
+```

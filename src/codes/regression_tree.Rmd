@@ -1,0 +1,36 @@
+Árvores de Decisão para Regressão
+
+```{r}
+#install.packages("rpart")
+#install.packages("forecast")
+library(rpart)
+library(forecast)
+
+```
+
+```{r}
+iris
+```
+```{r}
+model = rpart(Sepal.Length ~ Sepal.Width + Petal.Length + Species, data=iris)
+summary(model)
+```
+
+```{r}
+plot(model)
+```
+
+```{r}
+predicts = predict(model, iris)
+
+head(predicts)
+```
+
+```{r}
+comper = cbind(predicts, iris$Sepal.Length,predicts - iris$Sepal.Length)
+head(comper)
+```
+
+```{r}
+accuracy(predicts, iris$Sepal.Length)
+```
